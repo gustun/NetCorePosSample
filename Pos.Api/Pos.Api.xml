@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Pos.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Pos.Api.Controllers.ProductController.Get">
+            <summary>
+            Get products with paging
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
