@@ -5,13 +5,13 @@ using Pos.Contracts;
 
 namespace Pos.Api.Controllers
 {
-    [Route("api/products")]
+    [Route("api/orders")]
     [ApiController]
-    public class ProductController : BaseApiController
+    public class OrderController : BaseApiController
     {
         private readonly ILoggerManager _logger;
 
-        public ProductController(ILoggerManager logger)
+        public OrderController(ILoggerManager logger)
         {
             _logger = logger;
         }

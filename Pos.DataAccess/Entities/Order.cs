@@ -8,8 +8,6 @@ namespace Pos.DataAccess.Entities
 {
     public class Order : IEntity, IStamp
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         public string CustomerName { get; set; }

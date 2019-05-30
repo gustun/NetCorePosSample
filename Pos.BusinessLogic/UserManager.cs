@@ -35,7 +35,6 @@ namespace Pos.BusinessLogic
                 return dto.AddError("Email is used before!");
 
             var entity = _mapper.Map<User>(dto);
-            entity.Password = _cryptoHelper.Hash(entity.Password);
             _context.Users.Add(entity);
             _context.SaveChanges();
             dto = _mapper.Map<UserDto>(entity);

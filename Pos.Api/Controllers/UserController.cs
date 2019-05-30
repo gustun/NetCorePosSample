@@ -82,11 +82,11 @@ namespace Pos.Api.Controllers
         public IActionResult Get(Guid id)
         {
             var userId = GetUserId();
-            return Ok("anan");
+            return Ok(userId);
         }
 
         [AllowAnonymous, HttpPost]
-        public IActionResult Post(UserModel model)
+        public IActionResult Post(UserCreateModel model)
         {
             var dto = _mapper.Map<UserDto>(model);
             dto = _userManager.Add(dto);

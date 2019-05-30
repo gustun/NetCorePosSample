@@ -49,7 +49,7 @@ namespace Pos.Api
             services.ConfigureLoggerService();
             services.ConfigureInMemoryDatabase();
             services.ConfigureSwagger();
-            services.AddSingleton( new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile()); }).CreateMapper());
+            services.AddSingleton( new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile(new CryptoHelper())); }).CreateMapper());
 
             services.AddSingleton<ICryptoHelper, CryptoHelper>();
             services.AddScoped<IUserManager, UserManager>();
