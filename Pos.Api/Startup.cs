@@ -18,6 +18,7 @@ using Pos.Utility;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Pos.Api.Filters;
@@ -50,8 +51,9 @@ namespace Pos.Api
             services.ConfigureInMemoryDatabase();
             services.ConfigureSwagger();
             services.AddSingleton( new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile(new CryptoHelper())); }).CreateMapper());
-
             services.AddSingleton<ICryptoHelper, CryptoHelper>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUserManager, UserManager>();
 
             var jsonSerializerSettings = new JsonSerializerSettings

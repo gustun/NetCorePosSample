@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
@@ -25,15 +24,13 @@ namespace Pos.Api.Controllers
     {
         private readonly IUserManager _userManager;
         private readonly ICryptoHelper _cryptoHelper;
-        private readonly ILoggerManager _loggerManager;
         private readonly JwtIssuerOptions _jwtOptions;
         private readonly IMapper _mapper;
 
-        public UserController(ILoggerManager logger, IUserManager userManager, ICryptoHelper cryptoHelper, ILoggerManager loggerManager, IMapper mapper, IOptions<JwtIssuerOptions> jwtOptions)
+        public UserController(IUserManager userManager, ICryptoHelper cryptoHelper, IMapper mapper, IOptions<JwtIssuerOptions> jwtOptions)
         {
             _userManager = userManager;
             _cryptoHelper = cryptoHelper;
-            _loggerManager = loggerManager;
             _mapper = mapper;
             _jwtOptions = jwtOptions.Value;
         }

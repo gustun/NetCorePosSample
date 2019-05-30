@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Pos.Core.Enum;
 using Pos.Core.Interface;
 using Pos.DataAccess.Entities;
-using Pos.Utility;
 
 namespace Pos.DataAccess
 {
     public class PosDbContext : DbContext
     {
-        public PosDbContext(DbContextOptions options)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public PosDbContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor)
             : base(options)
         {
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public DbSet<User> Users { get; set; }
@@ -23,15 +26,26 @@ namespace Pos.DataAccess
 
         public override int SaveChanges()
         {
+            Guid.TryParse(_httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(i => i.Type == ClaimTypes.Sid)?.Value, out var userId);
+
             var updatedEntities = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified);
             foreach (var entry in updatedEntities)
                 if (entry.Entity is IStamp entity)
+                {
+                    if (userId != Guid.Empty)
+                        entity.UpdatedUserId = userId;
                     entity.UpdatedDate = DateTime.Now;
+
+                }
 
             var newEntities = ChangeTracker.Entries().Where(e => e.State == EntityState.Added);
             foreach (var entry in newEntities)
                 if (entry.Entity is IStamp entity)
+                {
+                    if (userId != Guid.Empty)
+                        entity.CreatedUserId = entity.UpdatedUserId = userId;
                     entity.CreatedDate = entity.UpdatedDate = DateTime.Now;
+                }
             return base.SaveChanges();
         }
 
