@@ -26,7 +26,7 @@ namespace Pos.DataAccess
 
         public override int SaveChanges()
         {
-            Guid.TryParse(_httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(i => i.Type == ClaimTypes.Sid)?.Value, out var userId);
+            Guid.TryParse(_httpContextAccessor.HttpContext?.User?.Claims.FirstOrDefault(i => i.Type == ClaimTypes.Sid)?.Value, out var userId);
 
             var updatedEntities = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified);
             foreach (var entry in updatedEntities)
