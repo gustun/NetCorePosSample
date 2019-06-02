@@ -53,7 +53,7 @@ namespace Pos.Api.Extension
 
                 c.AddSecurityDefinition("Bearer",
                     new ApiKeyScheme { In = "header",
-                        Description = "Please get your user token from \"api/users/login\" endpoint first. After that enter into field the word 'Bearer' following by space and JWT", 
+                        Description = "Please get your user token from \"v1/users/login\" endpoint first. After that enter into field the word 'Bearer' following by space and JWT", 
                         Name = "Authorization", Type = "apiKey" });
                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
                     { "Bearer", Enumerable.Empty<string>() },

@@ -2,7 +2,7 @@
 
 namespace Pos.Api.ViewModel
 {
-    public class LoginModel
+    public class LoginViewModel
     {
         [Required]
         public string UserName { get; set; }

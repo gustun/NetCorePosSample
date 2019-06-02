@@ -2,7 +2,7 @@
 
 namespace Pos.Api.ViewModel
 {
-    public class UserModel
+    public class UserViewModel
     {
         [Required]
         public string UserName { get; set; }
@@ -14,7 +14,7 @@ namespace Pos.Api.ViewModel
         public string LastName { get; set; }
     }
 
-    public class UserCreateModel : UserModel
+    public class NewUserViewModel : UserViewModel
     {
         [Required]
         public string Password { get; set; }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Pos.BusinessLogic.Dto.Base
 {
-    public abstract class PagedResultBase : Result
+    public abstract class PagedResultBase
     {
         public int CurrentPage { get; set; } 
         public int PageCount { get; set; } 
@@ -26,9 +26,8 @@ namespace Pos.BusinessLogic.Dto.Base
                 PageCount = PageCount, 
                 PageSize = PageSize, 
                 RowCount = RowCount,
-                Results = newList,
-                Messages =  Messages
-            };;
+                Results = newList
+            };
         }
     }
 }

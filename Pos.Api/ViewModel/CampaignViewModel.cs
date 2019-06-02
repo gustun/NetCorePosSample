@@ -1,15 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Pos.Core.Enum;
 
 namespace Pos.Api.ViewModel
 {
-    public class ProductViewModel : NewProductModel
+    public class CampaignViewModel
     {
         public Guid Id { get; set; }
-    }
 
-    public class NewProductModel
-    {
         [Required]
         public string Code { get; set; }
 
@@ -17,6 +15,11 @@ namespace Pos.Api.ViewModel
         public string Name { get; set; }
 
         [Required]
-        public decimal Price { get; set; }
+        public EDiscountType DiscounType { get; set; }
+
+        [Required]
+        public decimal DiscountValue { get; set; }
+        public int? MaxUsageCount { get; set; }
+        public int? UsageCount { get; set; }
     }
 }

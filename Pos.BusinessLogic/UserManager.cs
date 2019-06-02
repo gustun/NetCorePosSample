@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Pos.Contracts;
 using Pos.DataAccess;
 
 namespace Pos.BusinessLogic
@@ -16,23 +15,21 @@ namespace Pos.BusinessLogic
     {
         private readonly PosDbContext _context;
         private readonly IMapper _mapper;
-        private readonly ICryptoHelper _cryptoHelper;
 
-        public UserManager(PosDbContext posDbContext, IMapper mapper, ICryptoHelper cryptoHelper)
+        public UserManager(PosDbContext posDbContext, IMapper mapper)
         {
             _context = posDbContext;
             _mapper = mapper;
-            _cryptoHelper = cryptoHelper;
         }
 
 
         public UserDto Add(UserDto dto)
         {
             if (_context.Users.Any(x => x.UserName == dto.UserName))
-                return dto.AddError("Username already exists!");
+                return dto.AddError("Username is already being used!");
 
-            if (_context.Users.Any(x => x.UserName == dto.Email))
-                return dto.AddError("Email is used before!");
+            if (_context.Users.Any(x => x.Email == dto.Email))
+                return dto.AddError("Email is already being used!");
 
             var entity = _mapper.Map<User>(dto);
             _context.Users.Add(entity);
@@ -56,9 +53,15 @@ namespace Pos.BusinessLogic
         public Result Update(UserDto dto)
         {
             var result = new Result();
-            var entity = _context.Users.SingleOrDefault(x => x.Id == dto.Id);
+            var entity = Get(dto.Id);
             if (entity == null)
                 return result.AddError("User not found!");
+
+            if (_context.Users.Any(x => x.UserName == dto.UserName && x.Id != dto.Id))
+                return dto.AddError("Username is already being used!");
+
+            if (_context.Users.Any(x => x.Email == dto.Email && x.Id != dto.Id))
+                return dto.AddError("Email is already being used!");
 
             var newEntity = _mapper.Map<User>(dto);
             _context.Users.Update(newEntity);
@@ -74,6 +77,11 @@ namespace Pos.BusinessLogic
         public UserDto GetUserByUserName(string userName)
         {
             return _mapper.Map<UserDto>(_context.Users.AsNoTracking().SingleOrDefault(x => x.UserName == userName));
+        }
+
+        public bool IsExists(Guid entityId)
+        {
+            return _context.Users.Any(o => o.Id == entityId);
         }
 
         public PagedResult<UserDto> GetWithPaging(int page, int pageSize, Expression<Func<User, bool>> predicate = null)

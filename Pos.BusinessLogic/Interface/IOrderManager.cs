@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Pos.BusinessLogic.Dto;
 
 namespace Pos.BusinessLogic.Interface
 {
-    public interface  IOrderManager
+    public interface IOrderManager
     {
+        OrderDto Get(Guid id);
+        OrderDto Add(OrderDto dto);
     }
 }

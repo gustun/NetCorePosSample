@@ -18,7 +18,7 @@ using Pos.Contracts;
 
 namespace Pos.Api.Controllers
 {
-    [Route("api/users")]
+    [Route("v1/users")]
     [ApiController]
     public class UserController : BaseApiController
     {
@@ -35,25 +35,22 @@ namespace Pos.Api.Controllers
             _jwtOptions = jwtOptions.Value;
         }
 
-        [AllowAnonymous, HttpPost, Route("login")]
-        public IActionResult Login(LoginModel model)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
 
+        /// <summary>
+        /// Generates an authentication token
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [AllowAnonymous, HttpPost, Route("~/v1/login")]
+        public IActionResult Login(LoginViewModel model)
+        {
             var toReturn = new BaseResponse();
             var userDto = _userManager.GetUserByUserName(model.UserName);
             if (userDto == null)
-            {
-                toReturn.AddError("User not found.");
-                return NotFound(toReturn);
-            }
+                return Result(toReturn.AddError("User not found."), HttpStatusCode.NotFound);
 
             if (userDto.Password != _cryptoHelper.Hash(model.Password))
-            {
-                toReturn.AddError("Password is not correct.");
-                return BadRequest(toReturn);
-            }
+                return Result(toReturn.AddError("Password is not correct."));
 
             var handler = new JwtSecurityTokenHandler();
             var token = handler.CreateToken(new SecurityTokenDescriptor
@@ -72,22 +69,24 @@ namespace Pos.Api.Controllers
             });
 
             toReturn.Data = new { UserToken = handler.WriteToken(token) };
-            return Ok(toReturn);
-        }
-
-        [HttpGet, Route("{id}")]
-        public IActionResult Get(Guid id)
-        {
-            var userId = GetUserId();
-            return Ok(userId);
+            return Result(toReturn);
         }
 
         [AllowAnonymous, HttpPost]
-        public IActionResult Post(UserCreateModel model)
+        public IActionResult Post(NewUserViewModel viewModel)
         {
-            var dto = _mapper.Map<UserDto>(model);
+            var dto = _mapper.Map<UserDto>(viewModel);
             dto = _userManager.Add(dto);
-            return Result(dto, HttpStatusCode.Created);
+            return Result(dto, dto.IsSuccess ? HttpStatusCode.Created : HttpStatusCode.BadRequest);
+        }
+
+        [HttpGet, Route("~/v1/me")]
+        public IActionResult GetUserFromToken()
+        {
+            var userId = GetUserId();
+            var dto = _userManager.Get(userId);
+            if (!dto.IsSuccess) return Result(dto);
+            return Result(_mapper.Map<UserViewModel>(dto));
         }
     }
 }

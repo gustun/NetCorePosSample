@@ -65,6 +65,9 @@ namespace Pos.Api
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<IProductManager, ProductManager>();
+            services.AddScoped<IOrderManager, OrderManager>();
+            services.AddScoped<ICampaignManager, CampaignManager>();
 
             var jsonSerializerSettings = new JsonSerializerSettings
             {

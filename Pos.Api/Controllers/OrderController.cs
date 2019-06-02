@@ -1,52 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Pos.Api.Infrastructure;
-using Pos.Contracts;
+using Pos.Api.ViewModel;
+using Pos.BusinessLogic.Interface;
 
 namespace Pos.Api.Controllers
 {
-    [Route("api/orders")]
+    [Route("v1/orders")]
     [ApiController]
     public class OrderController : BaseApiController
     {
-        private readonly ILoggerManager _logger;
+        private readonly IOrderManager _orderManager;
+        private readonly IMapper _mapper;
 
-        public OrderController(ILoggerManager logger)
+        public OrderController(IOrderManager orderManager, IMapper mapper)
         {
-            _logger = logger;
+            _orderManager = orderManager;
+            _mapper = mapper;
         }
-
-        /// <summary>
-        /// Get products with paging
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            _logger.LogInfo("Hello from index");
-
-            return new[] { "value1", "value2" };
-        }
-
+        
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public IActionResult Get(Guid id)
         {
-            return "value";
+            var dto = _orderManager.Get(id);
+            if (!dto.IsSuccess) return Result(dto);
+            return Result(_mapper.Map<OrderViewModel>(dto));
         }
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] OrderViewModel order)
         {
-        }
-
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            //todo: develop
+            return Result("");
         }
     }
 }

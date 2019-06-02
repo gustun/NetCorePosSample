@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using Pos.BusinessLogic.Dto.Base;
 using Pos.Core.Interface;
@@ -15,5 +14,6 @@ namespace Pos.BusinessLogic.Interface.Common
         TDto Add(TDto dto);
         Result Update(TDto dto);
         Result Delete(Guid entityId);
+        bool IsExists(Guid entityId);
     }
 }

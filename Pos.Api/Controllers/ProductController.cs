@@ -1,52 +1,67 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Linq;
+using System.Net;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Pos.Api.Infrastructure;
-using Pos.Contracts;
+using Pos.Api.ViewModel;
+using Pos.BusinessLogic.Dto;
+using Pos.BusinessLogic.Dto.Base;
+using Pos.BusinessLogic.Interface;
 
 namespace Pos.Api.Controllers
 {
-    [Route("api/products")]
+    [Route("v1/products")]
     [ApiController]
     public class ProductController : BaseApiController
     {
-        private readonly ILoggerManager _logger;
+        private readonly IProductManager _productManager;
+        private readonly IMapper _mapper;
 
-        public ProductController(ILoggerManager logger)
+        public ProductController(IProductManager productManager, IMapper mapper)
         {
-            _logger = logger;
+            _productManager = productManager;
+            _mapper = mapper;
         }
-
-        /// <summary>
-        /// Get products with paging
-        /// </summary>
-        /// <returns></returns>
+        
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public IActionResult Get(int pageIndex = 1, int pageSize = 5)
         {
-            _logger.LogInfo("Hello from index");
-
-            return new[] { "value1", "value2" };
+            var pagedResult = _productManager.GetWithPaging(pageIndex, pageSize);
+            var vmList = pagedResult.Results.Select(_mapper.Map<ProductViewModel>).ToList();
+            return Result(pagedResult.CloneTo(vmList));
         }
 
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public IActionResult Get(Guid id)
         {
-            return "value";
+            var dto = _productManager.Get(id);
+            if (!dto.IsSuccess) return Result(dto);
+            return Result(_mapper.Map<ProductViewModel>(dto));
         }
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] NewProductModel vm)
         {
+            var dto = _mapper.Map<ProductDto>(vm);
+            dto = _productManager.Add(dto);
+            return Result(dto, dto.IsSuccess ? HttpStatusCode.Created : HttpStatusCode.BadRequest);
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(Guid id, [FromBody] NewProductModel vm)
         {
+            var dto = new ProductDto {Id = id};
+            _mapper.Map(vm, dto);
+            var result = _productManager.Update(dto);
+            return Result(result);
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(Guid id)
         {
+            var result = _productManager.Delete(id);
+            return Result(result);
         }
     }
 }

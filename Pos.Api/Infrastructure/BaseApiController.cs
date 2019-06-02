@@ -20,8 +20,19 @@ namespace Pos.Api.Infrastructure
             return new ObjectResult(new Result{ Messages = resultDto.Messages}) {StatusCode = statusCode.ToInt()};
         }
 
+        protected internal IActionResult Result(BaseResponse baseResponse, HttpStatusCode? statusCode = null)
+        {
+            if (statusCode == null)
+                statusCode = baseResponse.IsSuccess ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
+
+            return new ObjectResult(baseResponse) {StatusCode = statusCode.ToInt()};
+        }
+
         protected internal IActionResult Result(object model, string userMessage = null, ENotificationType status = ENotificationType.Info, HttpStatusCode? statusCode = null)
         {
+            if (model is BaseResponse baseResponse) 
+                return Result(baseResponse, statusCode);
+
             if (model is Result result) 
                 return Result(result, statusCode);
 
