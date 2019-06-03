@@ -41,7 +41,7 @@ namespace Pos.BusinessLogic
             if (entity == null)
                 return result.AddError("Product not found!");
 
-            if (_context.Campaigns.Any(x => x.Code == dto.Code && x.Id != dto.Id))
+            if (_context.Products.Any(x => x.Code == dto.Code && x.Id != dto.Id))
                 return dto.AddError($"The code '{dto.Code}' is already being used!");
 
             var newEntity = _mapper.Map<Product>(dto);

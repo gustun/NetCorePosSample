@@ -168,6 +168,8 @@ namespace Pos.Api
             using (var db = serviceScope.ServiceProvider.GetService<PosDbContext>())
             {
                 var hasher = serviceScope.ServiceProvider.GetService<ICryptoHelper>();
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
                 db.Users.Add(new User
                 {
                     Id = Guid.Parse("523755D5-E791-4FEA-B4EC-412E123E66F4"),

@@ -13,13 +13,13 @@ using Xunit;
 
 namespace Pos.BusinessLogic.Test
 {
-
     /// <summary>
     /// This test class uses moq library for db sets
     /// </summary>
     public class ProductManagerTests
     {
         private readonly ProductManager _productManager;
+        private readonly Guid _testProductId = Guid.NewGuid();
 
         public ProductManagerTests()
         {
@@ -27,7 +27,7 @@ namespace Pos.BusinessLogic.Test
             {
                 new Product
                 {
-                    Id = Guid.NewGuid(),
+                    Id = _testProductId,
                     Code = "M001",
                     Name = "T-Shirt",
                     Price = (decimal) 49.99
@@ -73,23 +73,87 @@ namespace Pos.BusinessLogic.Test
             Assert.False(pagedProducts.Results.IsNullOrEmpty());
         }
 
-        [Theory]
-        [InlineData("M001")]
-        [InlineData("M003")]
-        public void Test_Add(string productCode)
+        [Fact]
+        public void Test_Add_AlreadyExists()
         {
-            var newProductId = Guid.NewGuid();
             var newProductDto = new ProductDto
             {
-                Id = newProductId,
-                Code = productCode,
+                Id = Guid.NewGuid(),
+                Code = "M001",
                 Name = "Test-Product",
                 Price = (decimal) 99.99
             };
             var result = _productManager.Add(newProductDto);
+            Assert.False(result.IsSuccess);
+        }
 
-            if (productCode == "M001") Assert.False(result.IsSuccess);
-            else Assert.True(result.IsSuccess);
+        [Fact]
+        public void Test_Add_Success()
+        {
+            var newProductDto = new ProductDto
+            {
+                Id = Guid.NewGuid(),
+                Code = "Z001",
+                Name = "Test-Product",
+                Price = (decimal) 99.99
+            };
+            var result = _productManager.Add(newProductDto);
+            Assert.True(result.IsSuccess);
+        }
+
+        [Fact]
+        public void Test_Update_NotFound()
+        {
+            var newProductDto = new ProductDto
+            {
+                Id = Guid.NewGuid(),
+                Code = "Z001",
+                Name = "Test-Product",
+                Price = (decimal) 99.99
+            };
+            var result = _productManager.Update(newProductDto);
+            Assert.False(result.IsSuccess);
+        }
+
+        [Fact]
+        public void Test_Update_Success()
+        {
+            var newProductDto = new ProductDto
+            {
+                Id = _testProductId,
+                Code = "M011",
+                Name = "Test-Product",
+                Price = (decimal) 299.99
+            };
+            var result = _productManager.Update(newProductDto);
+            Assert.True(result.IsSuccess);
+        }
+
+        [Fact]
+        public void Test_Delete_NotFound()
+        {
+            var result = _productManager.Delete(Guid.NewGuid());
+            Assert.False(result.IsSuccess);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void Test_Exists(bool isExists)
+        {
+            var id = isExists ? _testProductId : Guid.NewGuid();
+            var result = _productManager.IsExists(id);
+            Assert.True(result == isExists);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void Test_Get(bool isExists)
+        {
+            var id = isExists ? _testProductId : Guid.NewGuid();
+            var result = _productManager.Get(id);
+            Assert.True(isExists == (result != null));
         }
     }
 }

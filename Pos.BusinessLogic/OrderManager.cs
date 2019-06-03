@@ -29,9 +29,6 @@ namespace Pos.BusinessLogic
                 .AsNoTracking()
                 .SingleOrDefault(x => x.Id == id);
 
-            if (order == null)
-                return toReturn.AddError("Order not found");
-
             GetOrderRelationalData(order);
             return _mapper.Map(order, toReturn);
         }
@@ -73,7 +70,7 @@ namespace Pos.BusinessLogic
                 if (campaign == null) return toReturn.AddError("Invalid Campaign Code!");
 
                 if (campaign.MaxUsageCount.HasValue && campaign.UsageCount >= campaign.MaxUsageCount)
-                    toReturn.AddError("Campaign max usage count is exceeded!");
+                    return toReturn.AddError("Campaign max usage count is exceeded!");
 
                 var oldPrice = core.TotalAmount;
                 var newPrice = CampaginCalculatorFactory.Create(campaign.DiscounType).ApplyCampaign(oldPrice, campaign.DiscountValue);
