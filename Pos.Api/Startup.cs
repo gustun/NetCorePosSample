@@ -170,7 +170,7 @@ namespace Pos.Api
                 var hasher = serviceScope.ServiceProvider.GetService<ICryptoHelper>();
                 db.Users.Add(new User
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("523755D5-E791-4FEA-B4EC-412E123E66F4"),
                     FirstName = "Gokcan",
                     LastName = "Ustun",
                     Email = "gokcan.ustun@yandex.com",
@@ -205,7 +205,7 @@ namespace Pos.Api
                     Code = "CMP01",
                     Name = "%10 Discount",
                     MaxUsageCount = 3,
-                    UsageCount = 1,
+                    UsageCount = 2,
                     DiscounType = EDiscountType.Ratio,
                     DiscountValue = 10
                 });

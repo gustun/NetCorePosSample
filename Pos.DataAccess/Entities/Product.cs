@@ -6,6 +6,11 @@ namespace Pos.DataAccess.Entities
 {
     public class Product : IEntity, IStamp
     {
+        public Product()
+        {
+            OrderProducts = new HashSet<OrderProduct>();
+        }
+
         public Guid Id { get; set; }
 
         public string Code { get; set; }

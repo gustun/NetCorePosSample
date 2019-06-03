@@ -28,7 +28,7 @@ namespace Pos.Api.Infrastructure
             return new ObjectResult(baseResponse) {StatusCode = statusCode.ToInt()};
         }
 
-        protected internal IActionResult Result(object model, string userMessage = null, ENotificationType status = ENotificationType.Info, HttpStatusCode? statusCode = null)
+        protected internal IActionResult Result(object model, HttpStatusCode? statusCode = null, string userMessage = null, ENotificationType status = ENotificationType.Info)
         {
             if (model is BaseResponse baseResponse) 
                 return Result(baseResponse, statusCode);

@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Pos.Core.Interface;
 
 namespace Pos.DataAccess.Entities
 {
     public class Order : IEntity, IStamp
     {
+        public Order()
+        {
+            OrderProducts = new HashSet<OrderProduct>();
+        }
+
         public Guid Id { get; set; }
 
         public string CustomerName { get; set; }
-        public decimal TotalPrice { get; set; }
+        public decimal TotalAmount { get; set; }
         public decimal DiscountTotal { get; set; }
 
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }

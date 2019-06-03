@@ -53,11 +53,12 @@ namespace Pos.DataAccess
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<OrderProduct>()
-            .HasOne(sc => sc.Order)
-            .WithMany(s => s.OrderProducts)
-            .HasForeignKey(sc => sc.OrderId)
-            .IsRequired();
+            modelBuilder.Entity<Order>()
+                .HasMany(x=>x.OrderProducts)
+                .WithOne(x=>x.Order)
+                .HasForeignKey(x=>x.OrderId)
+                .HasPrincipalKey(x=>x.Id)
+                .IsRequired();
 
             modelBuilder.Entity<OrderProduct>()
                 .HasOne(sc => sc.Product)

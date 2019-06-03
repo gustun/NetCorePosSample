@@ -1,11 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Pos.Api.ViewModel
 {
-    public class OrderProductViewModel
+    public class OrderProductViewModel : NewOrderProductViewModel
     {
+        public decimal ProductUnitPrice { get; set; }
+        public decimal TotalAmount { get; set; }
+    }
+
+    public class NewOrderProductViewModel
+    {
+        public string ProductCode { get; set; }
+        public int Quantity { get; set; }
     }
 }

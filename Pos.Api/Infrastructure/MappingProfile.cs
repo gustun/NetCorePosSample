@@ -19,6 +19,7 @@ namespace Pos.Api.Infrastructure
                 .ReverseMap();
 
             CreateMap<OrderProduct, OrderProductDto>()
+                .ForMember(x=>x.ProductCode, src=>src.MapFrom(x=>x.Product.Code))
                 .ReverseMap();
 
             CreateMap<Order, OrderDto>()
@@ -50,6 +51,7 @@ namespace Pos.Api.Infrastructure
                 .ReverseMap();
 
             CreateMap<OrderDto, OrderViewModel>()
+                .ForMember(x=>x.CreatedUserName, src=>src.MapFrom(x=>x.CreatedUser.FirstName + " " + x.CreatedUser.LastName))
                 .ReverseMap();
 
             CreateMap<Campaign, CampaignViewModel>()
@@ -64,6 +66,9 @@ namespace Pos.Api.Infrastructure
 
             CreateMap<LoginViewModel, UserDto>()
                 .ForMember(dest=>dest.Password, src => src.MapFrom(x=>cryptoHelper.Hash(x.Password)));
+
+            CreateMap<NewOrderProductViewModel, NewOrderProductDto>();
+            CreateMap<NewOrderViewModel, NewOrderDto>();
 
             #endregion
         }

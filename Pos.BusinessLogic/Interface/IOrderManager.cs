@@ -6,6 +6,6 @@ namespace Pos.BusinessLogic.Interface
     public interface IOrderManager
     {
         OrderDto Get(Guid id);
-        OrderDto Add(OrderDto dto);
+        OrderDto Add(NewOrderDto dto);
     }
 }

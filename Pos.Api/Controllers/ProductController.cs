@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Pos.Api.Infrastructure;
 using Pos.Api.ViewModel;
 using Pos.BusinessLogic.Dto;
-using Pos.BusinessLogic.Dto.Base;
 using Pos.BusinessLogic.Interface;
 
 namespace Pos.Api.Controllers
