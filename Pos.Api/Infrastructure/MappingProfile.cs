@@ -54,7 +54,10 @@ namespace Pos.Api.Infrastructure
                 .ForMember(x=>x.CreatedUserName, src=>src.MapFrom(x=>x.CreatedUser.FirstName + " " + x.CreatedUser.LastName))
                 .ReverseMap();
 
-            CreateMap<Campaign, CampaignViewModel>()
+            CreateMap<CampaignDto, CampaignViewModel>()
+                .ReverseMap();
+
+            CreateMap<CampaignDto, NewCampaignViewModel>()
                 .ReverseMap();
 
             #endregion

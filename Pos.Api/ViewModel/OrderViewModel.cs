@@ -8,6 +8,8 @@ namespace Pos.Api.ViewModel
         public Guid Id { get; set; }
         public string CustomerName { get; set; }
         public ICollection<OrderProductViewModel> OrderProducts { get; set; }
+        public decimal TotalAmount { get; set; }
+        public decimal DiscountTotal { get; set; }
 
         public DateTime CreatedDate { get; set; }
         public string CreatedUserName { get; set; }

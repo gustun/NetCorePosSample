@@ -10,6 +10,8 @@ namespace Pos.BusinessLogic.Dto
         public string CustomerName { get; set; }
         public string CampaignCode { get; set; }
         public ICollection<OrderProductDto> OrderProducts { get; set; }
+        public decimal TotalAmount { get; set; }
+        public decimal DiscountTotal { get; set; }
 
         public DateTime CreatedDate { get; set; }
         public Guid? CreatedUserId { get; set; }

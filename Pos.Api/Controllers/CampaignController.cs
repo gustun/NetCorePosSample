@@ -31,7 +31,7 @@ namespace Pos.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] CampaignViewModel vm)
+        public IActionResult Post([FromBody] NewCampaignViewModel vm)
         {
             var dto = _mapper.Map<CampaignDto>(vm);
             dto = _campaignManager.Add(dto);

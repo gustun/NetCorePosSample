@@ -4,10 +4,14 @@ using Pos.Core.Enum;
 
 namespace Pos.Api.ViewModel
 {
-    public class CampaignViewModel
+    public class CampaignViewModel : NewCampaignViewModel
     {
         public Guid Id { get; set; }
+        public int UsageCount { get; set; }
+    }
 
+    public class NewCampaignViewModel
+    {
         [Required]
         public string Code { get; set; }
 
@@ -20,6 +24,5 @@ namespace Pos.Api.ViewModel
         [Required]
         public decimal DiscountValue { get; set; }
         public int? MaxUsageCount { get; set; }
-        public int? UsageCount { get; set; }
     }
 }

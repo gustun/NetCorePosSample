@@ -13,7 +13,7 @@ namespace Pos.DataAccess.Entities
         public EDiscountType DiscounType { get; set; }
         public decimal DiscountValue { get; set; }
         public int? MaxUsageCount { get; set; }
-        public int? UsageCount { get; set; }
+        public int UsageCount { get; set; }
 
         public DateTime CreatedDate { get; set; }
         public Guid? CreatedUserId { get; set; }
