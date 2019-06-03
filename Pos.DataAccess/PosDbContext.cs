@@ -18,11 +18,11 @@ namespace Pos.DataAccess
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Campaign> Campaigns { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderProduct> OrderProducts { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Campaign> Campaigns { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderProduct> OrderProducts { get; set; }
 
         public override int SaveChanges()
         {
