@@ -2,7 +2,7 @@
 
 namespace Pos.Contracts
 {
-    public interface ILoggerManager
+    public interface ILoggerHelper
     {
         void LogInfo(string message);
         void LogWarn(string message);

@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NLog" Version="4.6.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Contracts\Pos.Contracts.csproj" />
   </ItemGroup>
 

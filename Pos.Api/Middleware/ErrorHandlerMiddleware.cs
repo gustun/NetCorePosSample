@@ -15,9 +15,9 @@ namespace Pos.Api.Middleware
     public class ErrorHandlerMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILoggerManager _logger;
+        private readonly ILoggerHelper _logger;
 
-        public ErrorHandlerMiddleware(RequestDelegate next, ILoggerManager logger)
+        public ErrorHandlerMiddleware(RequestDelegate next, ILoggerHelper logger)
         {
             _next = next;
             _logger = logger;

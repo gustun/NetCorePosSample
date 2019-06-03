@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using NLog;
 using Pos.Contracts;
 
-namespace Pos.BusinessLogic
+namespace Pos.Utility
 {
-    public class LoggerManager : ILoggerManager
+    public class LoggerHelper : ILoggerHelper
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
-        public LoggerManager()
+        public LoggerHelper()
         {
         }
 

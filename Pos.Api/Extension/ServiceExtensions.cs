@@ -6,9 +6,9 @@ using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Pos.BusinessLogic;
 using Pos.Contracts;
 using Pos.DataAccess;
+using Pos.Utility;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Pos.Api.Extension
@@ -17,7 +17,7 @@ namespace Pos.Api.Extension
     {
         public static void ConfigureLoggerService(this IServiceCollection services)
         {
-            services.AddSingleton<ILoggerManager, LoggerManager>();
+            services.AddSingleton<ILoggerHelper, LoggerHelper>();
         }
 
         public static void ConfigureInMemoryDatabase(this IServiceCollection services)

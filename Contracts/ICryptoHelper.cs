@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Pos.Contracts
+﻿namespace Pos.Contracts
 {
     public interface ICryptoHelper
     {
