@@ -14,7 +14,7 @@ using Pos.Api.ViewModel.Base;
 using Pos.BusinessLogic.Dto;
 using Pos.BusinessLogic.Dto.Base;
 using Pos.BusinessLogic.Interface;
-using Pos.Contracts;
+using Pos.Core.Interface;
 
 namespace Pos.Api.Controllers
 {
@@ -27,7 +27,10 @@ namespace Pos.Api.Controllers
         private readonly JwtIssuerOptions _jwtOptions;
         private readonly IMapper _mapper;
 
-        public UserController(IUserManager userManager, ICryptoHelper cryptoHelper, IMapper mapper, IOptions<JwtIssuerOptions> jwtOptions)
+        public UserController(IUserManager userManager,
+            ICryptoHelper cryptoHelper,
+            IMapper mapper,
+            IOptions<JwtIssuerOptions> jwtOptions)
         {
             _userManager = userManager;
             _cryptoHelper = cryptoHelper;

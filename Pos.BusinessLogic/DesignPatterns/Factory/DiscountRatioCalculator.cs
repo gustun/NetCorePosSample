@@ -1,4 +1,4 @@
-﻿using Pos.Contracts;
+﻿using Pos.BusinessLogic.Interface;
 
 namespace Pos.BusinessLogic.DesignPatterns.Factory
 {

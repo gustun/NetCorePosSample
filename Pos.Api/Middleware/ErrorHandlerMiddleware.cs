@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Pos.Api.ViewModel.Base;
 using Pos.BusinessLogic.Dto.Base;
-using Pos.Contracts;
 using Pos.Core.Enum;
+using Pos.Core.Interface;
 using Pos.Utility;
 
 namespace Pos.Api.Middleware

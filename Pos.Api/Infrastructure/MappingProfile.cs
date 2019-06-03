@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Pos.Api.ViewModel;
 using Pos.BusinessLogic.Dto;
-using Pos.Contracts;
+using Pos.Core.Interface;
 using Pos.DataAccess.Entities;
 
 namespace Pos.Api.Infrastructure

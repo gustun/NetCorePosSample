@@ -1,4 +1,4 @@
-﻿namespace Pos.Contracts
+﻿namespace Pos.BusinessLogic.Interface
 {
     public interface ICampaignCalculator
     {

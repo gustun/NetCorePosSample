@@ -1,4 +1,4 @@
-﻿namespace Pos.Contracts
+﻿namespace Pos.Core.Interface
 {
     public interface ICryptoHelper
     {

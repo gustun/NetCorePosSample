@@ -1,5 +1,5 @@
 ﻿using System;
-using Pos.Contracts;
+using Pos.BusinessLogic.Interface;
 using Pos.Core.Enum;
 
 namespace Pos.BusinessLogic.DesignPatterns.Factory

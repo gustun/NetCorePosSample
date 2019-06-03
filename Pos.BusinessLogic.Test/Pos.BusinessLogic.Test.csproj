@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\Pos.Contracts.csproj" />
     <ProjectReference Include="..\Pos.BusinessLogic\Pos.BusinessLogic.csproj" />
     <ProjectReference Include="..\Pos.Core\Pos.Core.csproj" />
     <ProjectReference Include="..\Pos.DataAccess\Pos.DataAccess.csproj" />

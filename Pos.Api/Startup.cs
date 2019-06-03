@@ -13,7 +13,6 @@ using Newtonsoft.Json.Serialization;
 using NLog.Extensions.Logging;
 using Pos.Api.Extension;
 using Pos.Api.Middleware;
-using Pos.Contracts;
 using Pos.Utility;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -27,6 +26,7 @@ using Pos.Api.Options;
 using Pos.BusinessLogic;
 using Pos.BusinessLogic.Interface;
 using Pos.Core.Enum;
+using Pos.Core.Interface;
 using Pos.DataAccess;
 using Pos.DataAccess.Entities;
 

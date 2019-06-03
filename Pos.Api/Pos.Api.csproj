@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\Pos.Contracts.csproj" />
     <ProjectReference Include="..\Pos.BusinessLogic\Pos.BusinessLogic.csproj" />
     <ProjectReference Include="..\Pos.DataAccess\Pos.DataAccess.csproj" />
     <ProjectReference Include="..\Pos.Utility\Pos.Utility.csproj" />

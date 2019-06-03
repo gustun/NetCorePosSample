@@ -1,6 +1,6 @@
 ﻿using System;
 using NLog;
-using Pos.Contracts;
+using Pos.Core.Interface;
 
 namespace Pos.Utility
 {

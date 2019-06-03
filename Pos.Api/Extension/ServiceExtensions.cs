@@ -6,7 +6,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Pos.Contracts;
+using Pos.Core.Interface;
 using Pos.DataAccess;
 using Pos.Utility;
 using Swashbuckle.AspNetCore.Swagger;
