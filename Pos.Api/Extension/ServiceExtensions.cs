@@ -6,9 +6,12 @@ using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Pos.Api.Swagger;
+using Pos.Api.Swagger.RequestExamples;
 using Pos.Core.Interface;
 using Pos.DataAccess;
 using Pos.Utility;
+using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Pos.Api.Extension
@@ -63,7 +66,10 @@ namespace Pos.Api.Extension
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 if (File.Exists(xmlPath))
                     c.IncludeXmlComments(xmlPath);
+                c.ExampleFilters();
             });
+
+            services.AddSwaggerExamplesFromAssemblyOf<LoginViewModelExample>();
         }
 
         public static void ConfigureCors(this IServiceCollection services)
