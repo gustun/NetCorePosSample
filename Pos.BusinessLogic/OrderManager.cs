@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -83,6 +84,15 @@ namespace Pos.BusinessLogic
             _context.SaveChanges();
             GetOrderRelationalData(core);
             return _mapper.Map(core, toReturn);
+        }
+
+        public List<OrderProductDto> GetOrderItems(Guid orderId)
+        {
+            var orderItemList = _context.OrderProducts.AsNoTracking().Where(x => x.OrderId == orderId).ToList();
+            foreach (var op in orderItemList)
+                op.Product = _context.Products.SingleOrDefault(x => x.Id == op.ProductId);
+
+            return _mapper.Map<List<OrderProductDto>>(orderItemList.ToList());
         }
     }
 }

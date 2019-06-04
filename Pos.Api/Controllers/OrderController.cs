@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Pos.Api.Infrastructure;
 using Pos.Api.ViewModel;
 using Pos.BusinessLogic.Dto;
+using Pos.BusinessLogic.Dto.Base;
 using Pos.BusinessLogic.Interface;
 
 namespace Pos.Api.Controllers
@@ -26,10 +28,20 @@ namespace Pos.Api.Controllers
         public IActionResult Get(Guid id)
         {
             var dto = _orderManager.Get(id);
-            if (!dto.IsSuccess) 
+            if (dto == null)
+                return Result(new Result().AddError("Order not found!"), HttpStatusCode.NotFound);
+
+            if(!dto.IsSuccess) 
                 return Result(dto);
 
             return Result(_mapper.Map<OrderViewModel>(dto));
+        }
+
+        [HttpGet("{id}/items")]
+        public IActionResult GetOrderProducts(Guid id)
+        {
+            var dto = _orderManager.GetOrderItems(id);
+            return Result(_mapper.Map<List<OrderProductViewModel>>(dto));
         }
 
         [HttpPost]

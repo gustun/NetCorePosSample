@@ -164,6 +164,37 @@ namespace Pos.BusinessLogic.Test
             Assert.True(testResult);
         }
 
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void Test_GetOrderItems(bool isExists)
+        {
+            var orderId = Guid.NewGuid();
+            if (isExists)
+            {
+                var newOrderDto = new NewOrderDto
+                {
+                    CustomerName = "TestCustomer",
+                    ProductList = new List<NewOrderProductDto>
+                    {
+                        new NewOrderProductDto
+                        {
+                            ProductCode = "M001",
+                            Quantity = 1
+                        },
+                    }
+                };
+
+                var result = _orderManager.Add(newOrderDto);
+                Assert.True(result.IsSuccess);
+                orderId = result.Id;
+            }
+
+            var listOfOrderItems = _orderManager.GetOrderItems(orderId);
+            var testResult = isExists == (listOfOrderItems != null && listOfOrderItems.Count > 0);
+            Assert.True(testResult);
+        }
+
         private void SeedDatabase(PosDbContext db)
         {
             var hasher = new CryptoHelper();
