@@ -23,6 +23,7 @@ namespace Pos.Api.Controllers
             _mapper = mapper;
         }
         
+        //todo: use filters
         [HttpGet]
         public IActionResult Get(int pageIndex = 1, int pageSize = 5)
         {
@@ -61,6 +62,13 @@ namespace Pos.Api.Controllers
         {
             var result = _productManager.Delete(id);
             return Result(result);
+        }
+
+        [HttpGet, Route("filter-options")]
+        public IActionResult GetFilterOptions()
+        {
+            var productFilters = _productManager.GetProductFilters();
+            return Result(productFilters);
         }
     }
 }

@@ -3,10 +3,13 @@ using Pos.BusinessLogic.Dto.Base;
 using Pos.BusinessLogic.Interface;
 using Pos.DataAccess.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Pos.BusinessLogic.DesignPatterns.Builder;
+using Pos.BusinessLogic.Dto.Common;
 using Pos.DataAccess;
 
 namespace Pos.BusinessLogic
@@ -91,6 +94,32 @@ namespace Pos.BusinessLogic
                 result.Results.Add(_mapper.Map<ProductDto>(entity));
 
             return result;
+        }
+
+        //todo: add to interface and merge with getwithpaging
+        public List<ProductDto> GetWithFilter(ProductFilterDto filterDto, int pageIndex, int pageSize)
+        {
+            var query = _context.Products.AsNoTracking();
+            var filterBuilder = ProductFilterBuilder.Create(query)
+                .SetSearchTerm(filterDto.SearchTerm)
+                .SetPrice(filterDto.Price)
+                .SetPaging(pageIndex, pageSize)
+                .Build();
+
+            var entities = filterBuilder.ToList();
+            return _mapper.Map<List<ProductDto>>(entities);
+        }
+
+        public ProductFilterOptionsDto GetProductFilters()
+        {
+            return new ProductFilterOptionsDto
+            {
+                Price = new RangeDto<decimal>
+                {
+                    Min = _context.Products.Min(x => x.Price), 
+                    Max = _context.Products.Max(x => x.Price)
+                }
+            };
         }
     }
 }
