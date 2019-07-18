@@ -1,6 +1,6 @@
 # Introduction
 
-NetCorePosSample is a basic example of e-commerce-pos Rest API which is developed to experience dotnet-core and new technologies.
+NetCorePosSample is a basic example of e-commerce/retail Rest API which is developed to experience dotnet-core and new technologies.
 
 # Used Libraries
   - Asp.Net Core 2.1 Web API
